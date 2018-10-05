@@ -74,6 +74,7 @@ If you discover any security related issues, please email jeroen@herczeg.be inst
 ## Credits
 
 - [Jeroen Herczeg][link-author]
+- [solariumphp/solarium](https://github.com/solariumphp/solarium)
 - [All Contributors][link-contributors]
 
 ## License
