@@ -1,6 +1,6 @@
 # Solr Driver for Laravel Scout
 
-<p align="center"><img src="http://lucene.apache.org/solr/assets/identity/Solr_Logo_on_white.png" width="300px"><br><br></p>
+<p align="center"><img src="https://camo.githubusercontent.com/af2cb956e5ad4e2656ef6aabd07ef1f09a795f9a/68747470733a2f2f6c61726176656c2e636f6d2f6173736574732f696d672f636f6d706f6e656e74732f6c6f676f2d73636f75742e737667" width="300px"><img src="http://lucene.apache.org/solr/assets/identity/Solr_Logo_on_white.png" width="300px"><br><br></p>
 
 [![Latest Version on Packagist][ico-version]][link-packagist]
 [![Software License][ico-license]](LICENSE.md)
