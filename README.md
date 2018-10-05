@@ -9,20 +9,6 @@
 [![Quality Score][ico-code-quality]][link-code-quality]
 [![Total Downloads][ico-downloads]][link-downloads]
 
-
-## Structure
-
-If any of the following are applicable to your project, then the directory structure should follow industry best practices by being named the following.
-
-```
-bin/        
-config/
-src/
-tests/
-vendor/
-```
-
-
 ## Install
 
 Via Composer
@@ -31,12 +17,41 @@ Via Composer
 $ composer require jeroenherczeg/laravel-scout-solr
 ```
 
+You must add the Scout service provider and the package service provider in your app.php config:
+
+```
+// config/app.php
+
+'providers' => [
+    ...
+    Laravel\Scout\ScoutServiceProvider::class,
+    ...
+    ScoutEngines\Solr\SolrProvider::class,
+],
+```
+
+After you've published the Laravel Scout package configuration:
+
+```php
+// config/scout.php
+
+// Set your driver to solr
+    'driver' => env('SCOUT_DRIVER', 'solr'),
+
+...
+    'solr' => [
+        'host' => env('SOLR_HOST', '127.0.0.1'),
+        'port' => env('SOLR_PORT', '8983'),
+        'path' => env('SOLR_PATH', '/solr/'),
+        'core' => env('SOLR_CORE', 'scout'),
+        
+    ],
+...
+```
+
 ## Usage
 
-``` php
-$skeleton = new ScoutEngines\Solr();
-echo $skeleton->echoPhrase('Hello, League!');
-```
+Now you can use Laravel Scout as described in the [official documentation](https://laravel.com/docs/5.7/scout)
 
 ## Change log
 
