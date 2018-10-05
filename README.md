@@ -8,6 +8,9 @@
 [![Coverage Status][ico-scrutinizer]][link-scrutinizer]
 [![Quality Score][ico-code-quality]][link-code-quality]
 [![Total Downloads][ico-downloads]][link-downloads]
+[![Laravel Scout][ico-laravel-scout]][link-laravel-scout]
+[![Apache Solr][ico-solr]][link-solr]
+[![PHP][ico-php]][link-php]
 
 ## Install
 
@@ -49,6 +52,12 @@ After you've published the Laravel Scout package configuration:
 ...
 ```
 
+### Solr setup
+
+```
+docker pull solr
+```
+
 ## Usage
 
 Now you can use Laravel Scout as described in the [official documentation](https://laravel.com/docs/5.7/scout)
@@ -87,6 +96,9 @@ The MIT License (MIT). Please see [License File](LICENSE.md) for more informatio
 [ico-scrutinizer]: https://img.shields.io/scrutinizer/coverage/g/jeroenherczeg/laravel-scout-solr.svg?style=flat-square
 [ico-code-quality]: https://img.shields.io/scrutinizer/g/jeroenherczeg/laravel-scout-solr.svg?style=flat-square
 [ico-downloads]: https://img.shields.io/packagist/dt/jeroenherczeg/laravel-scout-solr.svg?style=flat-square
+[ico-laravel-scout]: https://img.shields.io/badge/laravel%20scout-v5-blue.svg?style=flat-square
+[ico-solr]: https://img.shields.io/badge/apache%20solr-7.5-blue.svg?style=flat-square
+[ico-php]: https://img.shields.io/badge/php-7-blue.svg?style=flat-square
 
 [link-packagist]: https://packagist.org/packages/jeroenherczeg/laravel-scout-solr
 [link-travis]: https://travis-ci.org/jeroenherczeg/laravel-scout-solr
@@ -95,3 +107,6 @@ The MIT License (MIT). Please see [License File](LICENSE.md) for more informatio
 [link-downloads]: https://packagist.org/packages/jeroenherczeg/laravel-scout-solr
 [link-author]: https://github.com/jeroenherczeg
 [link-contributors]: ../../contributors
+[link-laravel-scout]: https://laravel.com/docs/5.7/scout
+[link-solr]: http://lucene.apache.org/solr/
+[link-php]: http://php.net/
