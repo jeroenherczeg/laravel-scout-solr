@@ -4,9 +4,24 @@ namespace ScoutEngines\Solr;
 
 use Laravel\Scout\Builder;
 use Laravel\Scout\Engines\Engine;
+use Solarium\Client;
 
 class SolrEngine extends Engine
 {
+    /**
+     * @var Client
+     */
+    private $client;
+
+    /**
+     * SolrEngine constructor.
+     *
+     * @param Client $client
+     */
+    public function __construct(Client $client)
+    {
+        $this->client = $client;
+    }
 
     /**
      * Update the given model in the index.
