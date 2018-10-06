@@ -14,46 +14,70 @@
 
 ## Problem?
 
-If you have **any** problems or questions, feel free to submit an [issue](link-issue) and I will reply to you as soon as possible.
+If you have **any** problems, questions or comments, feel free to submit an [issue](link-issue) and I will reply to you as soon as possible.
+
+## Prerequisites
+
+Install [Laravel Scout](https://laravel.com/docs/5.7/scout#installation).
 
 ## Install
 
-Via Composer
+Install via Composer
 
 ``` bash
 $ composer require jeroenherczeg/laravel-scout-solr
 ```
 
-You must add the Scout service provider and the package service provider in your app.php config:
+Set your SCOUT_DRIVER to solr:
+
+```
+// .env
+
+...
+
+SCOUT_DRIVER=solr
+```
+
+
+You must add the Scout service provider and the Solr engine service provider in your app.php config:
 
 ```
 // config/app.php
 
 'providers' => [
     ...
-    Laravel\Scout\ScoutServiceProvider::class,
-    ...
-    ScoutEngines\Solr\SolrProvider::class,
+        /*
+         * Package Service Providers...
+         */
+        Laravel\Scout\ScoutServiceProvider::class,
+        ScoutEngines\Solr\SolrProvider::class,
 ],
 ```
 
-After you've published the Laravel Scout package configuration:
+Add the Solr configuration to the scout config file:
 
 ```php
 // config/scout.php
 
-// Set your driver to solr
-    'driver' => env('SCOUT_DRIVER', 'solr'),
-
 ...
+
+    /*
+    |--------------------------------------------------------------------------
+    | Solr Configuration
+    |--------------------------------------------------------------------------
+    |
+    | Here you may configure your Solr settings. Solr is the popular, blazing
+    | -fast, open source enterprise search platform built on Apache Lucene.
+    | If necessary, you can override the configuration in your .env file.
+    |
+    */
+
     'solr' => [
         'host' => env('SOLR_HOST', '127.0.0.1'),
         'port' => env('SOLR_PORT', '8983'),
         'path' => env('SOLR_PATH', '/solr/'),
         'core' => env('SOLR_CORE', 'scout'),
-        
     ],
-...
 ```
 
 ### Solr setup
@@ -65,7 +89,6 @@ docker run --name laravel_scout -d -p 8983:8983 -t solr
 
 docker exec -it --user=solr laravel_scout bin/solr create_core -c scout
 
-docker cp config/schema.xml laravel_scout:/opt/solr/mydata.xml
 ```
 
 Go to http://localhost:8983/solr/#/scout
