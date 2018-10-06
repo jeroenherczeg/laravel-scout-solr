@@ -85,20 +85,6 @@ Add the Solr configuration to the scout config file:
     ],
 ```
 
-### Solr setup
-
-```
-docker pull solr
-
-docker run --name laravel_scout -d -p 8983:8983 -t solr
-
-docker exec -it --user=solr laravel_scout bin/solr create_core -c scout
-
-```
-
-Go to http://localhost:8983/solr/#/scout
-
-
 ## Usage
 
 Now you can use Laravel Scout as described in the [official documentation](https://laravel.com/docs/5.7/scout)
