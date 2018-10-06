@@ -12,9 +12,14 @@
 [![Apache Solr][ico-solr]][link-solr]
 [![PHP][ico-php]][link-php]
 
-## Problem?
+## Documentation
+
+You can read the documentation [here](https://solr-driver-for-laravel-scout.readthedocs.io/en/latest/).
+
+## Problems, questions or comments?
 
 If you have **any** problems, questions or comments, feel free to submit an [issue](link-issue) and I will reply to you as soon as possible.
+
 
 ## Prerequisites
 
