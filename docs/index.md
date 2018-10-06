@@ -1,0 +1,2 @@
+Laravel Scout Solr documentation
+================================
