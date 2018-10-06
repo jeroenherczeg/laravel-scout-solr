@@ -1,7 +1,10 @@
 <?php
 
+declare(strict_types=1);
+
 namespace ScoutEngines\Solr;
 
+use Illuminate\Database\Eloquent\Collection;
 use Laravel\Scout\Builder;
 use Laravel\Scout\Engines\Engine;
 use Solarium\Client;
@@ -31,7 +34,20 @@ class SolrEngine extends Engine
      */
     public function update($models)
     {
-        // TODO: Implement update() method.
+        if ($models->isEmpty()) {
+            return;
+        }
+
+        $updateQuery = $this->client->createUpdate();
+
+        $models->each(function($model) use(&$updateQuery){
+            $document = $updateQuery->createDocument($model->toSearchableArray());
+            $updateQuery->addDocument($document);
+        });
+
+        $updateQuery->addCommit();
+
+        $this->client->update($updateQuery);
     }
 
     /**
@@ -42,7 +58,20 @@ class SolrEngine extends Engine
      */
     public function delete($models)
     {
-        // TODO: Implement delete() method.
+        if ($models->isEmpty()) {
+            return;
+        }
+
+        $updateQuery = $this->client->createUpdate();
+
+        $ids = $models->map(function ($model) {
+            return $model->getScoutKey();
+        });
+
+        $updateQuery->addDeleteByIds($ids->toArray());
+        $updateQuery->addCommit();
+
+        $this->client->update($updateQuery);
     }
 
     /**
@@ -53,7 +82,7 @@ class SolrEngine extends Engine
      */
     public function search(Builder $builder)
     {
-        // TODO: Implement search() method.
+        return $this->performSearch($builder);
     }
 
     /**
@@ -66,41 +95,98 @@ class SolrEngine extends Engine
      */
     public function paginate(Builder $builder, $perPage, $page)
     {
-        // TODO: Implement paginate() method.
+        return $this->performSearch($builder, $perPage,$page - 1);
     }
 
     /**
      * Pluck and return the primary keys of the given results.
      *
-     * @param  mixed $results
+     * @param  \Solarium\QueryType\Select\Result\Result $results
      * @return \Illuminate\Support\Collection
      */
     public function mapIds($results)
     {
-        // TODO: Implement mapIds() method.
+        $ids = array_map(function ($document) {
+            return $document->id;
+        }, $results->getDocuments());
+
+        return collect($ids);
     }
 
     /**
      * Map the given results to instances of the given model.
      *
      * @param  \Laravel\Scout\Builder $builder
-     * @param  mixed $results
+     * @param  \Solarium\QueryType\Select\Result\Result $results
      * @param  \Illuminate\Database\Eloquent\Model $model
      * @return \Illuminate\Database\Eloquent\Collection
      */
     public function map(Builder $builder, $results, $model)
     {
-        // TODO: Implement map() method.
+        if (count($results->getDocuments()) === 0) {
+            return Collection::make();
+        }
+
+        $models = $model->getScoutModelsByIds(
+            $builder, collect($results->getDocuments())->pluck('objectID')->values()->all()
+        )->keyBy(function ($model) {
+            return $model->getScoutKey();
+        });
+
+        return Collection::make($results['hits'])->map(function ($hit) use ($models) {
+            if (isset($models[$hit['objectID']])) {
+                return $models[$hit['objectID']];
+            }
+        })->filter()->values();
     }
 
     /**
      * Get the total count from a raw result returned by the engine.
      *
-     * @param  mixed $results
+     * @param  \Solarium\QueryType\Select\Result\Result $results
      * @return int
      */
     public function getTotalCount($results)
     {
-        // TODO: Implement getTotalCount() method.
+        return $results->getNumFound();
+    }
+
+    /**
+     * Perform the given search on the engine.
+     *
+     * @param  \Laravel\Scout\Builder  $builder
+     * @param  int|null $perPage
+     * @param  int|null $offset
+     * @return mixed
+     */
+    protected function performSearch(Builder $builder, $perPage = null, $offset = null)
+    {
+        $selectQuery = $this->client->createSelect();
+
+        $conditions = (empty($builder->query)) ? [] : [$builder->query];
+        $conditions = array_merge($conditions, $this->filters($builder));
+
+        $selectQuery->setQuery(implode(' ', $conditions));
+
+        if(!is_null($perPage)) {
+            $selectQuery->setStart($offset)->setRows($perPage);
+        }
+
+        // @todo callback return
+
+        return $this->client->select($selectQuery);
+    }
+
+    /**
+     * Get the filter array for the query.
+     *
+     * @param  \Laravel\Scout\Builder  $builder
+     * @return array
+     */
+    protected function filters(Builder $builder)
+    {
+        return collect($builder->wheres)->map(function ($value, $key) {
+            return sprintf('%s:"%s"', $key, $value);
+        })->values()->all();
     }
 }

@@ -12,6 +12,10 @@
 [![Apache Solr][ico-solr]][link-solr]
 [![PHP][ico-php]][link-php]
 
+## Problem?
+
+If you have **any** problems or questions, feel free to submit an [issue](link-issue) and I will reply to you as soon as possible.
+
 ## Install
 
 Via Composer
@@ -56,7 +60,16 @@ After you've published the Laravel Scout package configuration:
 
 ```
 docker pull solr
+
+docker run --name laravel_scout -d -p 8983:8983 -t solr
+
+docker exec -it --user=solr laravel_scout bin/solr create_core -c scout
+
+docker cp config/schema.xml laravel_scout:/opt/solr/mydata.xml
 ```
+
+Go to http://localhost:8983/solr/#/scout
+
 
 ## Usage
 
@@ -110,3 +123,4 @@ The MIT License (MIT). Please see [License File](LICENSE.md) for more informatio
 [link-laravel-scout]: https://laravel.com/docs/5.7/scout
 [link-solr]: http://lucene.apache.org/solr/
 [link-php]: http://php.net/
+[link-issues]: https://github.com/jeroenherczeg/laravel-scout-solr/issues
