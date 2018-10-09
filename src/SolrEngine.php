@@ -128,14 +128,14 @@ class SolrEngine extends Engine
         }
 
         $models = $model->getScoutModelsByIds(
-            $builder, collect($results->getDocuments())->pluck('objectID')->values()->all()
+            $builder, collect($results->getDocuments())->pluck('id')->values()->all()
         )->keyBy(function ($model) {
             return $model->getScoutKey();
         });
 
-        return Collection::make($results['hits'])->map(function ($hit) use ($models) {
-            if (isset($models[$hit['objectID']])) {
-                return $models[$hit['objectID']];
+        return Collection::make($results->getDocuments())->map(function ($document) use ($models) {
+            if (isset($models[$document['id']])) {
+                return $models[$document['id']];
             }
         })->filter()->values();
     }
