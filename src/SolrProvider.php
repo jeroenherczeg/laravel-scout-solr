@@ -16,10 +16,11 @@ class SolrProvider extends ServiceProvider
         app(EngineManager::class)->extend('solr', function($app) {
             $config = [
                 'endpoint' => [
-                    config('scout.solr.core') => [
+                    'default' => [
                         'host' => config('scout.solr.host'),
                         'port' => config('scout.solr.port'),
                         'path' => config('scout.solr.path'),
+                        'core' => config('scout.solr.core'),
                     ]
                 ]
             ];
