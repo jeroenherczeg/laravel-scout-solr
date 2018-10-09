@@ -89,6 +89,60 @@ Add the Solr configuration to the scout config file:
 
 Now you can use Laravel Scout as described in the [official documentation](https://laravel.com/docs/5.7/scout)
 
+## Using Solr with Laravel Homestead
+
+You can install Solr within your Homestead virtual machine.
+
+Add the port forwarding to your Homestead.yaml
+
+```
+// ~/Homestead/Homestead.yaml
+
+...
+
+ports:
+    - send: 18983
+      to: 8983
+      
+...
+```
+
+Add the following install steps to your Homestead after.sh script.
+
+```
+// ~/Homestead/after.sh
+
+#!/bin/sh
+
+# If you would like to do some extra provisioning you may
+# add any commands you wish to this file and they will
+# be run after the Homestead machine is provisioned.
+#
+# If you have user-specific configurations you would like
+# to apply, you may also create user-customizations.sh,
+# which will be run after this script.
+
+# Install Java Runtime Enviroment
+sudo apt-get update
+sudo apt-get install default-jre -y
+
+# Install Solr 7.5
+wget http://www-eu.apache.org/dist/lucene/solr/7.5.0/solr-7.5.0.tgz
+tar zxf solr-7.5.0.tgz
+cd solr-7.5.0
+bin/solr create -c scout
+bin/solr start
+
+```
+
+You will need to recreate your the virtual machine.
+
+```
+vagrant destroy && vagrant up
+```
+
+Once the virtual machine is installed and running, you can access Solr admin on http://127.0.0.1:18983/solr/#/ .
+
 ## Change log
 
 Please see [CHANGELOG](CHANGELOG.md) for more information on what has changed recently.
