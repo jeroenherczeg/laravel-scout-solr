@@ -45,7 +45,7 @@ class SolrEngine extends Engine
             $searchableModel = $model->toSearchableArray();
 
             // make sure there is and id in the array - otherwise we will create duplicates all the time
-            if (array_key_exists('id', $searchableModel)) {
+            if (!array_key_exists('id', $searchableModel)) {
                 $searchableModel['id'] = $model->getScoutKey();
             }
 
