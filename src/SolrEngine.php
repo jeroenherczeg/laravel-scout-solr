@@ -41,7 +41,16 @@ class SolrEngine extends Engine
         $updateQuery = $this->client->createUpdate();
 
         $models->each(function($model) use(&$updateQuery){
-            $document = $updateQuery->createDocument($model->toSearchableArray());
+
+            $searchableModel = $model->toSearchableArray();
+
+            // make sure there is and id in the array - otherwise we will create duplicates all the time
+            if (array_key_exists('id', $searchableModel)) {
+                $searchableModel['id'] = $model->getScoutKey();
+            }
+
+            $document = $updateQuery->createDocument($searchableModel);
+
             $updateQuery->addDocument($document);
         });
 
