@@ -104,7 +104,9 @@ class SolrEngine extends Engine
      */
     public function paginate(Builder $builder, $perPage, $page)
     {
-        return $this->performSearch($builder, $perPage,$page - 1);
+        $offset = ($page-1) * $perPage;
+
+        return $this->performSearch($builder, $perPage, $offset);
     }
 
     /**
