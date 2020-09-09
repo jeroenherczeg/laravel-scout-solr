@@ -14,13 +14,13 @@
         }
     ],
     "require": {
-        "php": "^7.0",
-        "laravel/scout": "^5.0",
-        "solarium/solarium": "^4.1"
+        "php": "^7.2",
+        "laravel/scout": "^8.0",
+        "solarium/solarium": "^4.2"
     },
     "require-dev": {
-        "phpunit/phpunit" : "^6",
-        "squizlabs/php_codesniffer": "^2.3"
+        "friendsofphp/php-cs-fixer": "^2.16",
+        "phpunit/phpunit": "^9.3"
     },
     "autoload": {
         "psr-4": {
@@ -34,12 +34,17 @@
     },
     "scripts": {
         "test": "phpunit",
-        "check-style": "phpcs -p --standard=PSR2 --runtime-set ignore_errors_on_exit 1 --runtime-set ignore_warnings_on_exit 1 src tests",
-        "fix-style": "phpcbf -p --standard=PSR2 --runtime-set ignore_errors_on_exit 1 --runtime-set ignore_warnings_on_exit 1 src tests"
+        "check-style": "php-cs-fixer fix --diff --dry-run",
+        "fix-style": "php-cs-fixer fix"
     },
     "extra": {
         "branch-alias": {
-            "dev-master": "1.0-dev"
+            "dev-master": "2.0-dev"
+        },
+        "laravel": {
+            "providers": [
+                "ScoutEngines\\Solr\\SolrProvider"
+            ]
         }
     },
     "config": {

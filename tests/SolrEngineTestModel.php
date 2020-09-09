@@ -17,8 +17,8 @@ class SolrEngineTestModel extends Model
     public function toSearchableArray()
     {
         return [
-            'id' => 1,
-            'name' => 'Laravel Scout Solr Engine'
+            'id'   => 1,
+            'name' => 'Laravel Scout Solr Engine',
         ];
     }
 }

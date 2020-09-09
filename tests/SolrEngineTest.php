@@ -29,16 +29,13 @@ class SolrEngineTest extends TestCase
 
     public function testDeleteRemovesUpdatesFromTheIndex()
     {
-
     }
 
     public function testSearchSendsCorrectConditionsToSolr()
     {
-
     }
 
     public function testResultsGetMappedToTheCorrectModels()
     {
-
     }
 }

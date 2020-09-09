@@ -40,12 +40,11 @@ class SolrEngine extends Engine
 
         $updateQuery = $this->client->createUpdate();
 
-        $models->each(function($model) use(&$updateQuery){
-
+        $models->each(function ($model) use (&$updateQuery) {
             $searchableModel = $model->toSearchableArray();
 
             // make sure there is and id in the array - otherwise we will create duplicates all the time
-            if (!array_key_exists('id', $searchableModel)) {
+            if (!\array_key_exists('id', $searchableModel)) {
                 $searchableModel['id'] = $model->getScoutKey();
             }
 
@@ -104,7 +103,7 @@ class SolrEngine extends Engine
      */
     public function paginate(Builder $builder, $perPage, $page)
     {
-        $offset = ($page-1) * $perPage;
+        $offset = ($page - 1) * $perPage;
 
         return $this->performSearch($builder, $perPage, $offset);
     }
@@ -134,7 +133,7 @@ class SolrEngine extends Engine
      */
     public function map(Builder $builder, $results, $model)
     {
-        if (count($results->getDocuments()) === 0) {
+        if (\count($results->getDocuments()) === 0) {
             return Collection::make();
         }
 
@@ -163,6 +162,17 @@ class SolrEngine extends Engine
     }
 
     /**
+     * Flush all of the model's records from the engine.
+     *
+     * @param  \Illuminate\Database\Eloquent\Model  $model
+     * @return void
+     */
+    public function flush($model)
+    {
+        // @TODO: Implement this.
+    }
+
+    /**
      * Perform the given search on the engine.
      *
      * @param  \Laravel\Scout\Builder  $builder
@@ -179,7 +189,7 @@ class SolrEngine extends Engine
 
         $selectQuery->setQuery(implode(' ', $conditions));
 
-        if(!is_null($perPage)) {
+        if (!\is_null($perPage)) {
             $selectQuery->setStart($offset)->setRows($perPage);
         }
 
