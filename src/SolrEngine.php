@@ -38,24 +38,30 @@ class SolrEngine extends Engine
             return;
         }
 
-        $updateQuery = $this->client->createUpdate();
+        $query = $this->client->createUpdate();
 
-        $models->each(function ($model) use (&$updateQuery) {
-            $searchableModel = $model->toSearchableArray();
+        $models->each(function ($model) use (&$query) {
+            $attrs = array_filter($model->toSearchableArray(), function ($value) {
+                return !\is_null($value);
+            });
 
-            // make sure there is and id in the array - otherwise we will create duplicates all the time
-            if (!\array_key_exists('id', $searchableModel)) {
-                $searchableModel['id'] = $model->getScoutKey();
+            // Make sure there is an ID in the array,
+            // otherwise we will create duplicates all the time.
+            if (!\array_key_exists('id', $attrs)) {
+                $attrs['id'] = $model->getScoutKey();
             }
 
-            $document = $updateQuery->createDocument($searchableModel);
+            // Add model class to attributes for flushing.
+            $attrs['_class'] = \get_class($model);
 
-            $updateQuery->addDocument($document);
+            $document = $query->createDocument($attrs);
+            $query->addDocument($document);
         });
 
-        $updateQuery->addCommit();
+        $query->addCommit();
 
-        $this->client->update($updateQuery);
+        $endpoint = $models->first()->searchableAs();
+        $this->client->update($query, $endpoint);
     }
 
     /**
@@ -70,16 +76,16 @@ class SolrEngine extends Engine
             return;
         }
 
-        $updateQuery = $this->client->createUpdate();
-
         $ids = $models->map(function ($model) {
             return $model->getScoutKey();
         });
 
-        $updateQuery->addDeleteByIds($ids->toArray());
-        $updateQuery->addCommit();
+        $query = $this->client->createUpdate();
+        $query->addDeleteByIds($ids->toArray());
+        $query->addCommit();
 
-        $this->client->update($updateQuery);
+        $endpoint = $models->first()->searchableAs();
+        $this->client->update($query, $endpoint);
     }
 
     /**
@@ -169,7 +175,13 @@ class SolrEngine extends Engine
      */
     public function flush($model)
     {
-        // @TODO: Implement this.
+        $class = \is_object($model) ? \get_class($model) : false;
+        if ($class) {
+            $query = $this->client->createUpdate();
+            $query->addDeleteQuery("_class:{$class}");
+            $query->addCommit();
+            $this->client->update($query);
+        }
     }
 
     /**
