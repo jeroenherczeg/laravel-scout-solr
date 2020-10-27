@@ -14,7 +14,7 @@
         }
     ],
     "require": {
-        "php": "^7.2",
+        "php": "^7.3",
         "laravel/scout": "^8.0",
         "solarium/solarium": "^4.2"
     },
