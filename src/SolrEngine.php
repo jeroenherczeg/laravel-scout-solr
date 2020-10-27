@@ -38,25 +38,30 @@ class SolrEngine extends Engine
             return;
         }
 
-        $updateQuery = $this->client->createUpdate();
+        $query = $this->client->createUpdate();
 
-        $models->each(function($model) use(&$updateQuery){
+        $models->each(function ($model) use (&$query) {
+            $attrs = array_filter($model->toSearchableArray(), function ($value) {
+                return !\is_null($value);
+            });
 
-            $searchableModel = $model->toSearchableArray();
-
-            // make sure there is and id in the array - otherwise we will create duplicates all the time
-            if (!array_key_exists('id', $searchableModel)) {
-                $searchableModel['id'] = $model->getScoutKey();
+            // Make sure there is an ID in the array,
+            // otherwise we will create duplicates all the time.
+            if (!\array_key_exists('id', $attrs)) {
+                $attrs['id'] = $model->getScoutKey();
             }
 
-            $document = $updateQuery->createDocument($searchableModel);
+            // Add model class to attributes for flushing.
+            $attrs['_class'] = \get_class($model);
 
-            $updateQuery->addDocument($document);
+            $document = $query->createDocument($attrs);
+            $query->addDocument($document);
         });
 
-        $updateQuery->addCommit();
+        $query->addCommit();
 
-        $this->client->update($updateQuery);
+        $endpoint = $models->first()->searchableAs();
+        $this->client->update($query, $endpoint);
     }
 
     /**
@@ -71,16 +76,16 @@ class SolrEngine extends Engine
             return;
         }
 
-        $updateQuery = $this->client->createUpdate();
-
         $ids = $models->map(function ($model) {
             return $model->getScoutKey();
         });
 
-        $updateQuery->addDeleteByIds($ids->toArray());
-        $updateQuery->addCommit();
+        $query = $this->client->createUpdate();
+        $query->addDeleteByIds($ids->toArray());
+        $query->addCommit();
 
-        $this->client->update($updateQuery);
+        $endpoint = $models->first()->searchableAs();
+        $this->client->update($query, $endpoint);
     }
 
     /**
@@ -104,7 +109,7 @@ class SolrEngine extends Engine
      */
     public function paginate(Builder $builder, $perPage, $page)
     {
-        $offset = ($page-1) * $perPage;
+        $offset = ($page - 1) * $perPage;
 
         return $this->performSearch($builder, $perPage, $offset);
     }
@@ -134,7 +139,7 @@ class SolrEngine extends Engine
      */
     public function map(Builder $builder, $results, $model)
     {
-        if (count($results->getDocuments()) === 0) {
+        if (\count($results->getDocuments()) === 0) {
             return Collection::make();
         }
 
@@ -163,6 +168,23 @@ class SolrEngine extends Engine
     }
 
     /**
+     * Flush all of the model's records from the engine.
+     *
+     * @param  \Illuminate\Database\Eloquent\Model  $model
+     * @return void
+     */
+    public function flush($model)
+    {
+        $class = \is_object($model) ? \get_class($model) : false;
+        if ($class) {
+            $query = $this->client->createUpdate();
+            $query->addDeleteQuery("_class:{$class}");
+            $query->addCommit();
+            $this->client->update($query);
+        }
+    }
+
+    /**
      * Perform the given search on the engine.
      *
      * @param  \Laravel\Scout\Builder  $builder
@@ -179,7 +201,7 @@ class SolrEngine extends Engine
 
         $selectQuery->setQuery(implode(' ', $conditions));
 
-        if(!is_null($perPage)) {
+        if (!\is_null($perPage)) {
             $selectQuery->setStart($offset)->setRows($perPage);
         }
 

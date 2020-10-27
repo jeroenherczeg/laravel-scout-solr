@@ -2,8 +2,8 @@
 
 namespace ScoutEngines\Solr;
 
-use Laravel\Scout\EngineManager;
 use Illuminate\Support\ServiceProvider;
+use Laravel\Scout\EngineManager;
 use Solarium\Client;
 
 class SolrProvider extends ServiceProvider
@@ -13,7 +13,7 @@ class SolrProvider extends ServiceProvider
      */
     public function boot()
     {
-        app(EngineManager::class)->extend('solr', function($app) {
+        app(EngineManager::class)->extend('solr', function ($app) {
             $config = [
                 'endpoint' => [
                     'default' => [
@@ -21,8 +21,8 @@ class SolrProvider extends ServiceProvider
                         'port' => config('scout.solr.port'),
                         'path' => config('scout.solr.path'),
                         'core' => config('scout.solr.core'),
-                    ]
-                ]
+                    ],
+                ],
             ];
 
             return new SolrEngine(new Client($config));
