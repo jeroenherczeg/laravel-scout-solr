@@ -23,7 +23,7 @@ If you have **any** problems, questions or comments, feel free to submit an [iss
 
 ## Prerequisites
 
-Install [Laravel Scout](https://laravel.com/docs/5.7/scout#installation).
+Install [Laravel Scout](https://laravel.com/docs/8.x/scout).
 
 ## Install
 
