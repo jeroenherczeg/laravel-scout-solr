@@ -60,8 +60,7 @@ class SolrEngine extends Engine
 
         $query->addCommit();
 
-        $endpoint = $models->first()->searchableAs();
-        $this->client->update($query, $endpoint);
+        $this->client->update($query, 'default');
     }
 
     /**
@@ -177,6 +176,8 @@ class SolrEngine extends Engine
     {
         $class = \is_object($model) ? \get_class($model) : false;
         if ($class) {
+            // replace \ with \\
+            $class = str_replace("\\","\\\\",$class);
             $query = $this->client->createUpdate();
             $query->addDeleteQuery("_class:{$class}");
             $query->addCommit();
