@@ -15,8 +15,8 @@
     ],
     "require": {
         "php": "^7.3",
-        "laravel/scout": "^8.0",
-        "solarium/solarium": "^4.2"
+        "laravel/scout": "^8.5",
+        "solarium/solarium": "^6.0"
     },
     "require-dev": {
         "friendsofphp/php-cs-fixer": "^2.16",
