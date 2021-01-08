@@ -5,6 +5,8 @@ namespace ScoutEngines\Solr;
 use Illuminate\Support\ServiceProvider;
 use Laravel\Scout\EngineManager;
 use Solarium\Client;
+use Solarium\Core\Client\Adapter\Curl;
+use Symfony\Component\EventDispatcher\EventDispatcher;
 
 class SolrProvider extends ServiceProvider
 {
@@ -25,7 +27,15 @@ class SolrProvider extends ServiceProvider
                 ],
             ];
 
-            return new SolrEngine(new Client($config));
+            $adapter = new Curl();
+            $eventDispatcher = new EventDispatcher();
+            $client = new Client($adapter,$eventDispatcher,$config);
+            if(config('scout.solr.username')){
+                $client->getEndpoint()
+                    ->setAuthentication(config('scout.solr.username'),config('scout.solr.password'));
+            }
+
+            return new SolrEngine($client);
         });
     }
 }
