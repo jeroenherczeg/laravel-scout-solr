@@ -5,9 +5,11 @@ declare(strict_types=1);
 namespace ScoutEngines\Solr;
 
 use Illuminate\Database\Eloquent\Collection;
-use Laravel\Scout\Builder;
 use Laravel\Scout\Engines\Engine;
 use Solarium\Client;
+
+use ScoutEngines\Solr\Builder;
+
 
 class SolrEngine extends Engine
 {
@@ -61,7 +63,9 @@ class SolrEngine extends Engine
         $query->addCommit();
 
         $endpoint = $models->first()->searchableAs();
-        $this->client->update($query, $endpoint);
+        //dd($this->client->getEndpoints());
+        //dd($endpoint);
+        $this->client->update($query, 'default');
     }
 
     /**
@@ -94,7 +98,7 @@ class SolrEngine extends Engine
      * @param  \Laravel\Scout\Builder $builder
      * @return mixed
      */
-    public function search(Builder $builder)
+    public function search( Builder $builder)
     {
         return $this->performSearch($builder);
     }
@@ -196,6 +200,30 @@ class SolrEngine extends Engine
     {
         $selectQuery = $this->client->createSelect();
 
+        $fq_array = [];
+        foreach($builder->fqs as $fq) {
+            foreach($fq as $field=>$values) {
+                if ( is_array($values) ) {
+                    $stringied = implode( ' OR ' . $field . ":", $values);
+                    $par = $field.":".$stringied;
+                } else {
+                    $par = $field.":".$values;
+                }
+                $fq_array[] = $par;
+            }
+        }
+
+        $selectQuery->addParam('fq', $fq_array);
+
+        if(!empty($builder->facets)) {
+            $selectQuery->addParam('facet', 'on');
+            $selectQuery->addParam('facet.field', $builder->facets);
+        }
+
+        if(!empty($builder->order)) {
+            $selectQuery->addParam('sort', $builder->order);
+        }
+
         $conditions = (empty($builder->query)) ? [] : [$builder->query];
         $conditions = array_merge($conditions, $this->filters($builder));
 
@@ -206,6 +234,8 @@ class SolrEngine extends Engine
         }
 
         // @todo callback return
+        //dd($selectQuery);
+        //dd($this->client);
 
         return $this->client->select($selectQuery);
     }
@@ -218,6 +248,12 @@ class SolrEngine extends Engine
      */
     protected function filters(Builder $builder)
     {
+        /*
+        dd( collect($builder->wheres)->map(function ($value, $key) {
+            return sprintf('%s:"%s"', $key, $value);
+        })->values()->all() );
+        dd($builder->wheres);
+        */
         return collect($builder->wheres)->map(function ($value, $key) {
             return sprintf('%s:"%s"', $key, $value);
         })->values()->all();
