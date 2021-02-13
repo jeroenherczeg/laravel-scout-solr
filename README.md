@@ -59,6 +59,10 @@ You must add the Scout service provider and the Solr engine service provider in 
 ],
 ```
 
+Publish the config file:
+
+```php artisan vendor:publish --provider="Laravel\Scout\ScoutServiceProvider"```
+
 Add the Solr configuration to the scout config file:
 
 ```php
