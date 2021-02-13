@@ -5,10 +5,10 @@ declare(strict_types=1);
 namespace ScoutEngines\Solr;
 
 use Illuminate\Database\Eloquent\Collection;
-use Laravel\Scout\Engines\Engine;
+//use Laravel\Scout\Engines\Engine;
 use Solarium\Client;
-
 use ScoutEngines\Solr\Builder;
+use ScoutEngines\Solr\Engine;
 
 
 class SolrEngine extends Engine
@@ -95,18 +95,20 @@ class SolrEngine extends Engine
     /**
      * Perform the given search on the engine.
      *
-     * @param  \Laravel\Scout\Builder $builder
+     * @param  \ScoutEngines\Solr\Builder $builder
      * @return mixed
      */
     public function search( Builder $builder)
     {
+        echo __FILE__ . ":" . __LINE__ . "\n"; 
+        dd(get_class($builder));
         return $this->performSearch($builder);
     }
 
     /**
      * Perform the given search on the engine.
      *
-     * @param  \Laravel\Scout\Builder $builder
+     * @param  \ScoutEngines\Solr\Builder $builder
      * @param  int $perPage
      * @param  int $page
      * @return mixed
@@ -136,7 +138,7 @@ class SolrEngine extends Engine
     /**
      * Map the given results to instances of the given model.
      *
-     * @param  \Laravel\Scout\Builder $builder
+     * @param  \ScoutEngines\Solr\Builder $builder
      * @param  \Solarium\QueryType\Select\Result\Result $results
      * @param  \Illuminate\Database\Eloquent\Model $model
      * @return \Illuminate\Database\Eloquent\Collection
@@ -191,7 +193,7 @@ class SolrEngine extends Engine
     /**
      * Perform the given search on the engine.
      *
-     * @param  \Laravel\Scout\Builder  $builder
+     * @param  \ScoutEngines\Solr\Builder  $builder
      * @param  int|null $perPage
      * @param  int|null $offset
      * @return mixed
@@ -243,7 +245,7 @@ class SolrEngine extends Engine
     /**
      * Get the filter array for the query.
      *
-     * @param  \Laravel\Scout\Builder  $builder
+     * @param  \ScoutEngines\Solr\Builder  $builder
      * @return array
      */
     protected function filters(Builder $builder)
