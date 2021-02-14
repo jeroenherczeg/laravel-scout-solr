@@ -27,5 +27,11 @@ class SolrProvider extends ServiceProvider
 
             return new SolrEngine(new Client($config));
         });
+
+        $this->app->concord->registerAlias(
+            \Laravel\Scout\Builder::class,
+            \ScoutEngines\Solr\Builder::class
+        );
+
     }
 }

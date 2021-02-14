@@ -1,9 +1,9 @@
 {
-    "name": "jeroenherczeg/laravel-scout-solr",
+    "name": "iateadonut/laravel-scout-solr",
     "type": "library",
     "description": "Solr Driver for Laravel Scout",
     "keywords": ["laravel", "scout", "solr"],
-    "homepage": "https://github.com/jeroenherczeg/laravel-scout-solr",
+    "homepage": "https://github.com/iateadonut/laravel-scout-solr",
     "license": "MIT",
     "authors": [
         {
@@ -11,10 +11,17 @@
             "email": "jeroen@herczeg.be",
             "homepage": "https://herczeg.be",
             "role": "Developer"
+        },
+        {
+            "name": "Daniel Ahern",
+            "email": "100wires@gmail.com",
+            "homepage": "https://100wires.com",
+            "role": "Developer"
         }
     ],
     "require": {
         "php": "^7.3",
+        "konekt/concord": "^1.10",
         "laravel/scout": "^8.0",
         "solarium/solarium": "^4.2"
     },

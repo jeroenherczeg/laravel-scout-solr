@@ -1,4 +1,4 @@
-# Solr Driver for Laravel Scout
+# Solr Driver for Laravel Scout with support for filters and facets ('where' and 'select distinct row, count(*)')
 
 <p align="center"><img src="http://lucene.apache.org/solr/assets/identity/Solr_Logo_on_white.png" width="200px"><br><br></p>
 
@@ -25,12 +25,16 @@ If you have **any** problems, questions or comments, feel free to submit an [iss
 
 Install [Laravel Scout](https://laravel.com/docs/8.x/scout).
 
+## Dependencies
+
+We use konekt/concord, a package manager, to override the \Laravel\Scout\Builder in SolrProvider.php
+
 ## Install
 
 Install via Composer
 
 ``` bash
-$ composer require jeroenherczeg/laravel-scout-solr
+$ composer require iateadonut/laravel-scout-solr
 ```
 
 Set your SCOUT_DRIVER to solr:
@@ -58,6 +62,11 @@ You must add the Scout service provider and the Solr engine service provider in 
         ScoutEngines\Solr\SolrProvider::class,
 ],
 ```
+
+Publish the config file:
+
+```php artisan vendor:publish --provider="Laravel\Scout\ScoutServiceProvider"```
+
 
 Add the Solr configuration to the scout config file:
 
@@ -87,7 +96,41 @@ Add the Solr configuration to the scout config file:
 
 ## Usage
 
+### to index
+
+```php artisan scout:import "App\Users"```
+
 Now you can use Laravel Scout as described in the [official documentation](https://laravel.com/docs/5.7/scout)
+
+## Extended Usage
+
+### filter([array])
+
+the ->where() of solr
+
+distinct filters are separated by AND while attributes within  a filter are separated by OR
+
+e.g.
+
+````->filter('category', [1,2])```` - this would yield where category in (1,2)
+
+````->filter('category', [1])->filter('category', [2])```` - this would yield where category in (1) AND category in (2)
+
+### facet()
+
+facets will give you lists of a field name and the number of results for each distinct value.
+
+e.g. if you have a table with the column 'fat' with the distinct values 1 and 0:
+
+->facet('fat')
+
+will calculate how many rows have a value of 1 and how many rows have a value of 0
+
+### getFacets()
+
+returns an array of values and the number of times they occur in the result set.
+
+````$facets = $model->search('term')->facet('column')->getFacets();````
 
 ## Using Solr with Laravel Homestead
 
