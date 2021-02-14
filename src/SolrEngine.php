@@ -5,10 +5,10 @@ declare(strict_types=1);
 namespace ScoutEngines\Solr;
 
 use Illuminate\Database\Eloquent\Collection;
-//use Laravel\Scout\Engines\Engine;
+use Laravel\Scout\Engines\Engine;
 use Solarium\Client;
 use ScoutEngines\Solr\Builder;
-use ScoutEngines\Solr\Engine;
+//use ScoutEngines\Solr\Engine;
 
 
 class SolrEngine extends Engine
@@ -100,8 +100,6 @@ class SolrEngine extends Engine
      */
     public function search( Builder $builder)
     {
-        echo __FILE__ . ":" . __LINE__ . "\n"; 
-        dd(get_class($builder));
         return $this->performSearch($builder);
     }
 

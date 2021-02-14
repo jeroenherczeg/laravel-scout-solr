@@ -6,9 +6,10 @@ use Illuminate\Container\Container;
 use Illuminate\Pagination\LengthAwarePaginator;
 use Illuminate\Pagination\Paginator;
 use Illuminate\Support\Traits\Macroable;
-//use Laravel\Scout\Builder as ScoutBuilder;
 
-class Builder //extends ScoutBuilder
+// copied from Laravel\Scout\Builder - then extended with filter(), etc, methods
+
+class Builder 
 {
     use Macroable;
 

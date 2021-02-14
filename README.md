@@ -25,6 +25,10 @@ If you have **any** problems, questions or comments, feel free to submit an [iss
 
 Install [Laravel Scout](https://laravel.com/docs/8.x/scout).
 
+## Dependencies
+
+We use konekt/concord, a package manager, to override the \Laravel\Scout\Builder in SolrProvider.php
+
 ## Install
 
 Install via Composer
@@ -63,6 +67,7 @@ Publish the config file:
 
 ```php artisan vendor:publish --provider="Laravel\Scout\ScoutServiceProvider"```
 
+
 Add the Solr configuration to the scout config file:
 
 ```php
@@ -90,6 +95,10 @@ Add the Solr configuration to the scout config file:
 ```
 
 ## Usage
+
+### to index
+
+```php artisan scout:import "App\Users"```
 
 Now you can use Laravel Scout as described in the [official documentation](https://laravel.com/docs/5.7/scout)
 
