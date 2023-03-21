@@ -1,6 +1,5 @@
 # Solr Driver for Laravel Scout
-
-Updated for Laravel 10
+Solr driver for Laravel Scout. (Updated for Laravel 10)
 ## Documentation
 
 Not ready yet.
@@ -9,10 +8,9 @@ Not ready yet.
 
 If you have **any** problems, questions or comments, feel free to submit an [issue](link-issue) and I will reply to you as soon as possible.
 
-
 ## Prerequisites
 
-Install [Laravel Scout](https://laravel.com/docs/10.x/scout#main-content.
+Install [Laravel Scout](https://laravel.com/docs/10.x/scout.
 
 ## Install
 
@@ -78,33 +76,20 @@ Add the Solr configuration to the scout config file:
 
 Now you can use Laravel Scout as described in the [official documentation](https://laravel.com/docs/10.x/scout#main-content)
 
-## Using Solr with Laravel Homestead
+## Solr Installation
 
-You can install Solr within your Homestead virtual machine.
 
 See the [Solr Install On Centos-Rocky-Alma Linux](https://www.semihyilmaz.com/centos-7-uzerine-solr-kurulumu/) for more information.
 
 
-
-
-## Testing
-
-``` bash
-$ composer test
-```
-
-## Contributing
-
-Please see [CONTRIBUTING](CONTRIBUTING.md) and [CODE_OF_CONDUCT](CODE_OF_CONDUCT.md) for details.
-
 ## Security
 
-If you discover any security related issues, please email jeroen@herczeg.be instead of using the issue tracker.
+If you discover any security related issues, please send me email instead of using the issue tracker.
 
 ## Credits
 
 - [Semih YILMAZ][link-author]
-- [Jeroen Herczeg][link-author]
+- [Jeroen Herczeg]
 - [solariumphp/solarium](https://github.com/solariumphp/solarium)
 - [All Contributors][link-contributors]
 

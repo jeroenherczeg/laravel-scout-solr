@@ -3,7 +3,7 @@
     "type": "library",
     "description": "Solr Driver for Laravel Scout",
     "keywords": ["laravel", "scout", "solr"],
-    "homepage": "https://github.com/semihyilmaz/laravel-solr-scout",
+    "homepage": "https://github.com/semihyilmaz/laravel-scout-solr",
     "license": "MIT",
     "authors": [
         {
