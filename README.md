@@ -1,7 +1,6 @@
 # Solr Driver for Laravel Scout
 
-<p align="center"><img src="http://lucene.apache.org/solr/assets/identity/Solr_Logo_on_white.png" width="200px"><br><br></p>
-
+Updated for Laravel 10
 ## Documentation
 
 Not ready yet.
@@ -113,10 +112,3 @@ If you discover any security related issues, please email jeroen@herczeg.be inst
 
 The MIT License (MIT). Please see [License File](LICENSE.md) for more information.
 
-[link-downloads]: https://packagist.org/packages/jeroenherczeg/laravel-scout-solr
-[link-author]: https://github.com/semihyilmaz
-[link-contributors]: ../../contributors
-[link-laravel-scout]: https://laravel.com/docs/10.x/scout#main-content
-[link-solr]: http://lucene.apache.org/solr/
-[link-php]: http://php.net/
-[link-issues]: https://github.com/jeroenherczeg/laravel-scout-solr/issues
