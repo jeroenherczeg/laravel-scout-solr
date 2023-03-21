@@ -1,36 +1,23 @@
 # Solr Driver for Laravel Scout
-
-<p align="center"><img src="http://lucene.apache.org/solr/assets/identity/Solr_Logo_on_white.png" width="200px"><br><br></p>
-
-[![Latest Version on Packagist][ico-version]][link-packagist]
-[![Software License][ico-license]](LICENSE.md)
-[![Build Status][ico-travis]][link-travis]
-[![Coverage Status][ico-scrutinizer]][link-scrutinizer]
-[![Quality Score][ico-code-quality]][link-code-quality]
-[![Total Downloads][ico-downloads]][link-downloads]
-[![Laravel Scout][ico-laravel-scout]][link-laravel-scout]
-[![Apache Solr][ico-solr]][link-solr]
-[![PHP][ico-php]][link-php]
-
+Solr driver for Laravel Scout. (Updated for Laravel 10)
 ## Documentation
 
-You can read the documentation [here](https://solr-driver-for-laravel-scout.readthedocs.io/en/latest/).
+Not ready yet.
 
 ## Problems, questions or comments?
 
 If you have **any** problems, questions or comments, feel free to submit an [issue](link-issue) and I will reply to you as soon as possible.
 
-
 ## Prerequisites
 
-Install [Laravel Scout](https://laravel.com/docs/8.x/scout).
+Install [Laravel Scout](https://laravel.com/docs/10.x/scout.
 
 ## Install
 
 Install via Composer
 
 ``` bash
-$ composer require jeroenherczeg/laravel-scout-solr
+$ composer require semihyilmaz/laravel-scout-solr
 ```
 
 Set your SCOUT_DRIVER to solr:
@@ -87,83 +74,22 @@ Add the Solr configuration to the scout config file:
 
 ## Usage
 
-Now you can use Laravel Scout as described in the [official documentation](https://laravel.com/docs/5.7/scout)
+Now you can use Laravel Scout as described in the [official documentation](https://laravel.com/docs/10.x/scout#main-content)
 
-## Using Solr with Laravel Homestead
+## Solr Installation
 
-You can install Solr within your Homestead virtual machine.
 
-Add the port forwarding to your Homestead.yaml
+See the [Solr Install On Centos-Rocky-Alma Linux](https://www.semihyilmaz.com/centos-7-uzerine-solr-kurulumu/) for more information.
 
-```
-// ~/Homestead/Homestead.yaml
-
-...
-
-ports:
-    - send: 18983
-      to: 8983
-      
-...
-```
-
-Add the following install steps to your Homestead after.sh script.
-
-```
-// ~/Homestead/after.sh
-
-#!/bin/sh
-
-# If you would like to do some extra provisioning you may
-# add any commands you wish to this file and they will
-# be run after the Homestead machine is provisioned.
-#
-# If you have user-specific configurations you would like
-# to apply, you may also create user-customizations.sh,
-# which will be run after this script.
-
-# Install Java Runtime Enviroment
-sudo apt-get update
-sudo apt-get install default-jre -y
-
-# Install Solr 7.5
-wget http://www-eu.apache.org/dist/lucene/solr/7.5.0/solr-7.5.0.tgz
-tar zxf solr-7.5.0.tgz
-cd solr-7.5.0
-bin/solr create -c scout
-bin/solr start
-
-```
-
-You will need to recreate your the virtual machine.
-
-```
-vagrant destroy && vagrant up
-```
-
-Once the virtual machine is installed and running, you can access Solr admin on http://127.0.0.1:18983/solr/#/ .
-
-## Change log
-
-Please see [CHANGELOG](CHANGELOG.md) for more information on what has changed recently.
-
-## Testing
-
-``` bash
-$ composer test
-```
-
-## Contributing
-
-Please see [CONTRIBUTING](CONTRIBUTING.md) and [CODE_OF_CONDUCT](CODE_OF_CONDUCT.md) for details.
 
 ## Security
 
-If you discover any security related issues, please email jeroen@herczeg.be instead of using the issue tracker.
+If you discover any security related issues, please send me email instead of using the issue tracker.
 
 ## Credits
 
-- [Jeroen Herczeg][link-author]
+- [Semih YILMAZ][link-author]
+- [Jeroen Herczeg]
 - [solariumphp/solarium](https://github.com/solariumphp/solarium)
 - [All Contributors][link-contributors]
 
@@ -171,24 +97,3 @@ If you discover any security related issues, please email jeroen@herczeg.be inst
 
 The MIT License (MIT). Please see [License File](LICENSE.md) for more information.
 
-[ico-version]: https://img.shields.io/packagist/v/jeroenherczeg/laravel-scout-solr.svg?style=flat-square
-[ico-license]: https://img.shields.io/badge/license-MIT-brightgreen.svg?style=flat-square
-[ico-travis]: https://img.shields.io/travis/jeroenherczeg/laravel-scout-solr/master.svg?style=flat-square
-[ico-scrutinizer]: https://img.shields.io/scrutinizer/coverage/g/jeroenherczeg/laravel-scout-solr.svg?style=flat-square
-[ico-code-quality]: https://img.shields.io/scrutinizer/g/jeroenherczeg/laravel-scout-solr.svg?style=flat-square
-[ico-downloads]: https://img.shields.io/packagist/dt/jeroenherczeg/laravel-scout-solr.svg?style=flat-square
-[ico-laravel-scout]: https://img.shields.io/badge/laravel%20scout-v5-blue.svg?style=flat-square
-[ico-solr]: https://img.shields.io/badge/apache%20solr-7.5-blue.svg?style=flat-square
-[ico-php]: https://img.shields.io/badge/php-7-blue.svg?style=flat-square
-
-[link-packagist]: https://packagist.org/packages/jeroenherczeg/laravel-scout-solr
-[link-travis]: https://travis-ci.org/jeroenherczeg/laravel-scout-solr
-[link-scrutinizer]: https://scrutinizer-ci.com/g/jeroenherczeg/laravel-scout-solr/code-structure
-[link-code-quality]: https://scrutinizer-ci.com/g/jeroenherczeg/laravel-scout-solr
-[link-downloads]: https://packagist.org/packages/jeroenherczeg/laravel-scout-solr
-[link-author]: https://github.com/jeroenherczeg
-[link-contributors]: ../../contributors
-[link-laravel-scout]: https://laravel.com/docs/5.7/scout
-[link-solr]: http://lucene.apache.org/solr/
-[link-php]: http://php.net/
-[link-issues]: https://github.com/jeroenherczeg/laravel-scout-solr/issues
