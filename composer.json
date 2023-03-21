@@ -1,26 +1,26 @@
 {
-    "name": "jeroenherczeg/laravel-scout-solr",
+    "name": "semihyilmaz/laravel-scout-solr",
     "type": "library",
     "description": "Solr Driver for Laravel Scout",
     "keywords": ["laravel", "scout", "solr"],
-    "homepage": "https://github.com/jeroenherczeg/laravel-scout-solr",
+    "homepage": "https://github.com/semihyilmaz/laravel-scout-solr",
     "license": "MIT",
     "authors": [
         {
-            "name": "Jeroen Herczeg",
-            "email": "jeroen@herczeg.be",
-            "homepage": "https://herczeg.be",
+            "name": "Semih Yilmaz",
+            "email": "semy@semihyilmaz.com",
+            "homepage": "https://semihyilmaz.com",
             "role": "Developer"
         }
     ],
     "require": {
-        "php": "^7.3",
-        "laravel/scout": "^8.0",
-        "solarium/solarium": "^4.2"
+        "php": "^8.1",
+        "laravel/scout": "^10.0",
+        "solarium/solarium": "^6.1"
     },
     "require-dev": {
-        "friendsofphp/php-cs-fixer": "^2.16",
-        "phpunit/phpunit": "^9.3"
+        "friendsofphp/php-cs-fixer": "^v3.10.0",
+        "phpunit/phpunit": "^10.0"
     },
     "autoload": {
         "psr-4": {
